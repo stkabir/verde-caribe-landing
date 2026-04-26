@@ -1,43 +1,60 @@
-# Astro Starter Kit: Minimal
+# Verde Caribe
 
-```sh
-pnpm create astro@latest -- --template minimal
+Sitio web para Verde Caribe, empresa de pastos vivos ubicada en Cancún, México. Servicio en toda la Riviera Maya: Cancún, Playa del Carmen, Puerto Morelos y Tulum.
+
+## 🚀 Quick Start
+
+```bash
+# Instalar dependencias
+pnpm install
+
+# Desarrollo local
+pnpm dev
+
+# Build para producción
+pnpm build
+
+# Preview del build
+pnpm preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech Stack
 
-## 🚀 Project Structure
+- **Framework**: Astro v6
+- **Styling**: Tailwind CSS v4
+- **Animations**: GSAP + ScrollTrigger
+- **Fonts**: Playfair Display, Source Sans 3
 
-Inside of your Astro project, you'll see the following folders and files:
+## Deploy a Netlify
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+Este proyecto está listo para deploy en Netlify:
+
+1. Conecta tu repositorio Git en [Netlify](https://netlify.com)
+2. Netlify detectará automáticamente la configuración en `netlify.toml`
+3. Deploy automático en cada push
+
+O usa el CLI:
+
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Proyecto
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Diseño botanical/organic con colores tierra y tipografía serif
+- SPA completa con todas las secciones en una página
+- Animaciones scroll con GSAP
+- Mobile-first responsive
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Estructura
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```
+src/
+├── components/    # Navbar, Footer
+├── data/         # Datos de pastos
+├── layouts/      # Layout base
+├── pages/        # index.astro (página principal)
+├── styles/       # CSS global + Tailwind
+└── utils/        # Utilidades (animations)
+```
