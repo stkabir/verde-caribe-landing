@@ -1,0 +1,135 @@
+---
+const navLinks = [
+	{ href: '/#inicio', label: 'Inicio' },
+	{ href: '/#pastos', label: 'Pastos' },
+	{ href: '/#nosotros', label: 'Nosotros' },
+	{ href: '/#pedidos', label: 'Pedidos' },
+	{ href: '/#contacto', label: 'Contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed top-0 left-0 right-0 z-40 bg-bg/85 backdrop-blur-md border-b border-border">
+	<nav class="max-w-7xl mx-auto px-6 lg:px-8">
+		<div class="flex items-center justify-between h-20">
+			<!-- Logo -->
+			<a href="/#inicio" class="font-heading text-2xl text-foreground tracking-wide hover:text-sage transition-colors duration-300">
+				Verde Caribe
+			</a>
+
+			<!-- Desktop Navigation -->
+			<ul class="hidden md:flex items-center gap-8">
+				{navLinks.map((link) => (
+					<li>
+						<a
+							href={link.href}
+							class="relative text-sm font-semibold text-text-secondary hover:text-foreground transition-colors duration-300 py-2 group"
+						>
+							{link.label}
+							<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-sage rounded-full transition-all duration-300 group-hover:w-full"></span>
+						</a>
+					</li>
+				))}
+			</ul>
+
+			<!-- CTA Button -->
+			<a href="/#pedidos" class="hidden md:inline-flex btn btn-primary text-sm py-2.5 px-5">
+				Solicitar cotización
+			</a>
+
+			<!-- Mobile Menu Button -->
+			<button
+				type="button"
+				class="md:hidden p-2 rounded-full hover:bg-clay/30 transition-colors duration-300"
+				id="mobile-menu-btn"
+				aria-label="Abrir menú"
+				aria-expanded="false"
+			>
+				<svg class="w-6 h-6 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+				</svg>
+			</button>
+		</div>
+	</nav>
+
+	<!-- Mobile Menu Overlay -->
+	<div
+		id="mobile-menu"
+		class="md:hidden fixed inset-0 z-50 bg-bg/95 backdrop-blur-lg transform translate-x-full transition-transform duration-500 ease-out"
+	>
+		<div class="flex flex-col h-full p-6">
+			<div class="flex items-center justify-between mb-12">
+				<span class="font-heading text-2xl text-foreground">Verde Caribe</span>
+				<button
+					type="button"
+					class="p-2 rounded-full hover:bg-clay/30 transition-colors duration-300"
+					id="mobile-menu-close"
+					aria-label="Cerrar menú"
+				>
+					<svg class="w-6 h-6 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+					</svg>
+				</button>
+			</div>
+
+			<ul class="flex flex-col gap-6">
+				{navLinks.map((link, index) => (
+					<li style={`animation-delay: ${index * 0.1}s`} class="animate-fade-up">
+						<a
+							href={link.href}
+							class="block text-3xl font-heading font-semibold text-foreground hover:text-sage transition-colors duration-300"
+						>
+							{link.label}
+						</a>
+					</li>
+				))}
+			</ul>
+
+			<div class="mt-auto">
+				<a href="/#pedidos" class="btn btn-primary w-full justify-center text-lg py-4">
+					Solicitar cotización
+				</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const menuBtn = document.getElementById('mobile-menu-btn');
+		const menuClose = document.getElementById('mobile-menu-close');
+		const mobileMenu = document.getElementById('mobile-menu');
+		const menuLinks = mobileMenu?.querySelectorAll('a');
+
+		const toggleMenu = () => {
+			const isOpen = mobileMenu?.classList.contains('translate-x-0');
+			if (isOpen) {
+				mobileMenu?.classList.remove('translate-x-0');
+				mobileMenu?.classList.add('translate-x-full');
+				menuBtn?.setAttribute('aria-expanded', 'false');
+				document.body.style.overflow = '';
+			} else {
+				mobileMenu?.classList.remove('translate-x-full');
+				mobileMenu?.classList.add('translate-x-0');
+				menuBtn?.setAttribute('aria-expanded', 'true');
+				document.body.style.overflow = 'hidden';
+			}
+		};
+
+		menuBtn?.addEventListener('click', toggleMenu);
+		menuClose?.addEventListener('click', toggleMenu);
+
+		menuLinks?.forEach(link => {
+			link.addEventListener('click', () => {
+				toggleMenu();
+			});
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && mobileMenu?.classList.contains('translate-x-0')) {
+				toggleMenu();
+			}
+		});
+	});
+</script>

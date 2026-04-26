@@ -1,0 +1,284 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F9F8F4;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F2F0EB;
+  --color-foreground: #2D3A31;
+  --color-text-secondary: #4A5568;
+  --color-sage: #8C9A84;
+  --color-clay: #DCCFC2;
+  --color-border: #E6E2DA;
+  --color-terracotta: #C27B66;
+  --color-forest: #2D3A31;
+
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+
+  --shadow-soft: 0 4px 6px -1px rgba(45, 58, 49, 0.05), 0 10px 15px -3px rgba(45, 58, 49, 0.05);
+  --shadow-medium: 0 10px 15px -3px rgba(45, 58, 49, 0.05), 0 20px 40px -10px rgba(45, 58, 49, 0.08);
+  --shadow-large: 0 25px 50px -12px rgba(45, 58, 49, 0.15);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-foreground);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-foreground);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all duration-300 ease-out;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: var(--color-forest);
+    color: white;
+    box-shadow: 0 10px 25px rgba(45, 58, 49, 0.15);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-terracotta);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(45, 58, 49, 0.2);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-sage);
+    border: 1px solid var(--color-sage);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-sage);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .section-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-sage);
+    margin-bottom: 0.5rem;
+  }
+
+  .card {
+    background-color: var(--color-surface);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform duration-500 ease-out, box-shadow duration-500 ease-out;
+  }
+
+  .card:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .contact-item {
+    transition: transform duration-300 ease-out, color duration-300 ease-out;
+  }
+
+  .contact-item:hover {
+    transform: translateX(4px);
+    color: var(--color-sage);
+  }
+
+  .stat-card {
+    transition: transform duration-500 ease-out, box-shadow duration-500 ease-out;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-sage);
+    transition: width duration-300 ease-out, left duration-300 ease-out;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .form-input {
+    transition: border-color duration-300 ease-out, box-shadow duration-300 ease-out, transform duration-300 ease-out;
+  }
+
+  .form-input:focus {
+    border-color: var(--color-sage);
+    box-shadow: 0 0 0 3px rgba(140, 154, 132, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .form-input:hover:not(:focus) {
+    border-color: var(--color-sage);
+  }
+
+  .social-icon {
+    transition: transform duration-300 ease-out, background-color duration-300 ease-out;
+  }
+
+  .social-icon:hover {
+    transform: scale(1.1) translateY(-2px);
+    background-color: var(--color-sage);
+  }
+
+  .footer-link {
+    position: relative;
+  }
+
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width duration-300 ease-out;
+  }
+
+  .footer-link:hover::after {
+    width: 100%;
+  }
+
+  .hero-image {
+    transition: transform duration-700 ease-out;
+  }
+
+  .hero-image:hover {
+    transform: scale(1.02);
+  }
+
+  .gallery-image {
+    transition: transform duration-500 ease-out, box-shadow duration-500 ease-out;
+  }
+
+  .gallery-image:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-large);
+  }
+
+  .location-tag {
+    transition: all duration-300 ease-out;
+  }
+
+  .location-tag:hover {
+    background-color: var(--color-sage);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .cta-card {
+    transition: transform duration-500 ease-out;
+  }
+
+  .cta-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .grass-info {
+    transition: transform duration-500 ease-out, box-shadow duration-500 ease-out;
+  }
+
+  .grass-info:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .grass-link {
+    transition: all duration-300 ease-out;
+  }
+
+  .grass-link:hover {
+    color: var(--color-terracotta);
+    transform: translateX(4px);
+  }
+
+  .grass-link .arrow-icon {
+    transition: transform duration-300 ease-out;
+  }
+
+  .grass-link:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+}
+
+.paper-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+}

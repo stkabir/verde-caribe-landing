@@ -1,0 +1,572 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { grasses } from '../data/pastos';
+import type { Grass } from '../data/pastos';
+---
+
+<Layout title="Pastos - Verde Caribe">
+	<Navbar />
+	<div class="paper-grain" aria-hidden="true"></div>
+
+	<main>
+		<section class="catalog-hero">
+			<div class="catalog-hero__content">
+				<p class="section__eyebrow">Nuestras variedades</p>
+				<h1>Pastos diseñados para el <em>Caribe</em></h1>
+				<p class="catalog-hero__subtitle">
+					Cultivamos y seleccionamos pastos resistentes al clima tropical de la Riviera Maya.
+					Desde Cancún hasta Tulum, llevamos verde vivo a tu proyecto.
+				</p>
+				<div class="catalog-hero__locations">
+					<svg class="catalog-hero__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+						<circle cx="12" cy="10" r="3"></circle>
+					</svg>
+					<span>Cancún · Playa del Carmen · Puerto Morelos · Tulum</span>
+				</div>
+			</div>
+			<div class="catalog-hero__visual" aria-hidden="true">
+				<div class="catalog-hero__arch">
+					<img
+						src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+						alt="Pasto verde exuberante"
+					/>
+				</div>
+			</div>
+		</section>
+
+		<section class="catalog-grid">
+			<div class="container">
+				<div class="grasses-grid">
+					{grasses.map((grass: Grass, index: number) => (
+						<article class={`grass-card ${index % 2 === 1 ? 'grass-card--offset' : ''}`}>
+							<div class="grass-card__image-wrapper">
+								<img
+									src={grass.image}
+									alt={`Pasto ${grass.name}`}
+									loading="lazy"
+								/>
+								<div class="grass-card__image-overlay"></div>
+							</div>
+							<div class="grass-card__body" style={`--card-color: ${grass.color}; --card-accent: ${grass.accent}`}>
+								<span class="grass-card__badge">{grass.name}</span>
+								<h2 class="grass-card__title">{grass.name}</h2>
+								<p class="grass-card__headline"><em>{grass.headline}</em></p>
+								<p class="grass-card__description">{grass.longDescription}</p>
+
+								<div class="grass-card__benefits">
+									<h3>Beneficios</h3>
+									<ul>
+										{grass.benefits.map((benefit: string) => (
+											<li>
+												<svg class="grass-card__benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+													<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+													<path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+												</svg>
+												{benefit}
+											</li>
+										))}
+									</ul>
+								</div>
+
+								<div class="grass-card__recommendation">
+									<svg class="grass-card__recommend-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="5"></circle>
+										<line x1="12" y1="1" x2="12" y2="3"></line>
+										<line x1="12" y1="21" x2="12" y2="23"></line>
+										<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+										<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+										<line x1="1" y1="12" x2="3" y2="12"></line>
+										<line x1="21" y1="12" x2="23" y2="12"></line>
+										<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+										<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+									</svg>
+									<span>Ideal para: <strong>{grass.recommendedFor}</strong></span>
+								</div>
+
+								<a href={`/pasto/${grass.slug}`} class="grass-card__cta">
+									Ver ficha técnica
+									<svg class="grass-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+										<polyline points="12 5 19 12 12 19"></polyline>
+									</svg>
+								</a>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="catalog-cta">
+			<div class="container">
+				<div class="cta-card">
+					<div class="cta-card__content">
+						<h2>¿Listo para transformar tu espacio?</h2>
+						<p>
+							Nuestro equipo técnico evalúa tu terreno, te recomienda la variedad adecuada
+							y coordina la entrega puntual en toda la Riviera Maya.
+						</p>
+					</div>
+					<div class="cta-card__actions">
+						<a href="/pedidos" class="btn btn--primary">
+							Solicitar cotización
+						</a>
+						<a href="/contacto" class="btn btn--secondary">
+							Hablanos directamente
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style>
+	.paper-grain {
+		pointer-events: none;
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		opacity: 0.015;
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+		background-repeat: repeat;
+	}
+
+	.container {
+		max-width: 80rem;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	.section__eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.25em;
+		font-size: 0.8rem;
+		color: var(--color-accent);
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.catalog-hero {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 4rem;
+		align-items: center;
+		padding: 5rem 1.5rem 6rem;
+		max-width: 80rem;
+		margin: 0 auto;
+	}
+
+	.catalog-hero__content {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.catalog-hero h1 {
+		font-family: 'Playfair Display', serif;
+		font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+		font-weight: 600;
+		line-height: 1.1;
+		color: var(--color-text-primary);
+		margin: 0;
+	}
+
+	.catalog-hero h1 em {
+		font-style: italic;
+		color: var(--color-accent);
+	}
+
+	.catalog-hero__subtitle {
+		font-size: 1.15rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		max-width: 50ch;
+		margin: 0;
+	}
+
+	.catalog-hero__locations {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--color-accent);
+		font-weight: 500;
+		font-size: 0.9rem;
+	}
+
+	.catalog-hero__icon {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.catalog-hero__visual {
+		position: relative;
+	}
+
+	.catalog-hero__arch {
+		border-radius: 120px 120px 0 0;
+		overflow: hidden;
+		box-shadow: 0 25px 50px -12px rgba(45, 58, 49, 0.15);
+		aspect-ratio: 4/5;
+		max-height: 500px;
+	}
+
+	.catalog-hero__arch img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.catalog-grid {
+		padding: 4rem 0 6rem;
+		background: linear-gradient(180deg, transparent 0%, rgba(220, 207, 194, 0.15) 50%, transparent 100%);
+	}
+
+	.grasses-grid {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 4rem;
+	}
+
+	@media (min-width: 768px) {
+		.grasses-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 3rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.grasses-grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 4rem;
+		}
+	}
+
+	.grass-card {
+		background: var(--color-surface);
+		border-radius: 1.5rem;
+		overflow: hidden;
+		box-shadow: 0 4px 6px -1px rgba(45, 58, 49, 0.05), 0 10px 15px -3px rgba(45, 58, 49, 0.05);
+		transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+		display: flex;
+		flex-direction: column;
+	}
+
+	@media (min-width: 768px) {
+		.grass-card--offset {
+			transform: translateY(3rem);
+		}
+	}
+
+	.grass-card:hover {
+		transform: translateY(-0.5rem);
+		box-shadow: 0 20px 40px -10px rgba(45, 58, 49, 0.1);
+	}
+
+	.grass-card__image-wrapper {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.grass-card__image-wrapper img {
+		width: 100%;
+		aspect-ratio: 4/3;
+		object-fit: cover;
+		transition: transform 0.7s ease-out;
+	}
+
+	.grass-card:hover .grass-card__image-wrapper img {
+		transform: scale(1.05);
+	}
+
+	.grass-card__image-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 50%;
+		background: linear-gradient(to top, rgba(45, 58, 49, 0.1), transparent);
+		pointer-events: none;
+	}
+
+	.grass-card__body {
+		padding: 2rem;
+		display: grid;
+		gap: 1rem;
+		flex: 1;
+		background: var(--card-color, var(--color-surface));
+	}
+
+	.grass-card__badge {
+		display: inline-block;
+		background: var(--card-accent, var(--color-accent));
+		color: #fff;
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		padding: 0.3rem 0.8rem;
+		border-radius: 999px;
+		width: fit-content;
+	}
+
+	.grass-card__title {
+		font-family: 'Playfair Display', serif;
+		font-size: 1.75rem;
+		font-weight: 600;
+		color: var(--color-text-primary);
+		margin: 0;
+		line-height: 1.2;
+	}
+
+	.grass-card__headline {
+		font-size: 1rem;
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.grass-card__description {
+		font-size: 0.95rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.grass-card__benefits {
+		margin-top: 0.5rem;
+	}
+
+	.grass-card__benefits h3 {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--color-text-secondary);
+		margin: 0 0 0.75rem 0;
+		font-weight: 600;
+	}
+
+	.grass-card__benefits ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	.grass-card__benefits li {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 0.9rem;
+		color: var(--color-text-primary);
+	}
+
+	.grass-card__benefit-icon {
+		width: 1rem;
+		height: 1rem;
+		color: var(--card-accent, var(--color-accent));
+		flex-shrink: 0;
+	}
+
+	.grass-card__recommendation {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.85rem;
+		color: var(--color-text-secondary);
+		background: rgba(255, 255, 255, 0.6);
+		padding: 0.75rem 1rem;
+		border-radius: 0.75rem;
+		margin-top: auto;
+	}
+
+	.grass-card__recommendation strong {
+		color: var(--color-text-primary);
+	}
+
+	.grass-card__recommend-icon {
+		width: 1rem;
+		height: 1rem;
+		color: var(--card-accent, var(--color-accent));
+		flex-shrink: 0;
+	}
+
+	.grass-card__cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		font-size: 0.9rem;
+		color: var(--card-accent, var(--color-accent));
+		text-decoration: none;
+		margin-top: 0.5rem;
+		transition: color 0.3s ease, gap 0.3s ease;
+	}
+
+	.grass-card__cta:hover {
+		color: var(--color-link-hover);
+		gap: 0.75rem;
+	}
+
+	.grass-card__arrow {
+		width: 1rem;
+		height: 1rem;
+		transition: transform 0.3s ease;
+	}
+
+	.grass-card__cta:hover .grass-card__arrow {
+		transform: translateX(0.25rem);
+	}
+
+	.catalog-cta {
+		padding: 4rem 0 6rem;
+	}
+
+	.cta-card {
+		background: var(--color-surface);
+		border-radius: 2rem;
+		padding: 3rem;
+		box-shadow: 0 10px 15px -3px rgba(45, 58, 49, 0.05), 0 20px 40px -10px rgba(45, 58, 49, 0.1);
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 3rem;
+		align-items: center;
+	}
+
+	.cta-card__content h2 {
+		font-family: 'Playfair Display', serif;
+		font-size: clamp(1.5rem, 3vw + 0.5rem, 2.25rem);
+		font-weight: 600;
+		margin: 0 0 1rem 0;
+		color: var(--color-text-primary);
+	}
+
+	.cta-card__content p {
+		font-size: 1.05rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		margin: 0;
+		max-width: 50ch;
+	}
+
+	.cta-card__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.9rem 2rem;
+		border-radius: 999px;
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		cursor: pointer;
+	}
+
+	.btn--primary {
+		background: var(--color-accent-strong);
+		color: #fff;
+		box-shadow: 0 10px 25px rgba(15, 81, 50, 0.2);
+	}
+
+	.btn--primary:hover {
+		background: var(--color-accent);
+		transform: translateY(-2px);
+		box-shadow: 0 15px 30px rgba(15, 81, 50, 0.25);
+	}
+
+	.btn--secondary {
+		background: transparent;
+		color: var(--color-accent);
+		border: 1px solid var(--color-accent);
+	}
+
+	.btn--secondary:hover {
+		background: var(--color-accent);
+		color: #fff;
+		transform: translateY(-2px);
+	}
+
+	@media (max-width: 640px) {
+		.catalog-hero {
+			padding: 3rem 1rem 4rem;
+			gap: 2.5rem;
+		}
+
+		.catalog-hero__visual {
+			order: -1;
+		}
+
+		.catalog-hero__arch {
+			max-height: 300px;
+		}
+
+		.grass-card__body {
+			padding: 1.5rem;
+		}
+
+		.cta-card {
+			padding: 2rem 1.5rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.grass-card,
+		.grass-card__image-wrapper img,
+		.grass-card__cta,
+		.grass-card__arrow,
+		.btn {
+			transition: none;
+		}
+
+		.grass-card:hover {
+			transform: none;
+		}
+
+		.grass-card:hover .grass-card__image-wrapper img {
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const cards = document.querySelectorAll('.grass-card');
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						(entry.target as HTMLElement).style.opacity = '1';
+						(entry.target as HTMLElement).style.transform = 'translateY(0)';
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.1 }
+		);
+
+		cards.forEach((card, index) => {
+			const el = card as HTMLElement;
+			el.style.opacity = '0';
+			el.style.transform = 'translateY(2rem)';
+			el.style.transition = `opacity 0.6s ease-out ${index * 0.15}s, transform 0.6s ease-out ${index * 0.15}s`;
+			observer.observe(card);
+		});
+	});
+</script>
