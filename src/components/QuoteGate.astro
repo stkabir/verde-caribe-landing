@@ -1,0 +1,162 @@
+---
+const options = [
+	{
+		id: 'quick',
+		href: '#form-quick',
+		eyebrow: 'Cotización rápida',
+		title: 'Pasto y elementos',
+		description: 'Elige la variedad, agrega extras como plantas o piedras y recibe un estimado inmediato.',
+		cta: 'Cotizar',
+		accent: 'sage',
+		icon: 'leaf',
+	},
+	{
+		id: 'wizard',
+		href: '#form-wizard',
+		eyebrow: 'Diseño guiado',
+		title: 'Diseñar jardín desde cero',
+		description: 'Te guiamos paso a paso para definir el estilo, tamaño y elementos de tu nuevo jardín.',
+		cta: 'Empezar diseño',
+		accent: 'terracotta',
+		icon: 'sparkle',
+	},
+	{
+		id: 'project',
+		href: '#form-project',
+		eyebrow: 'A medida',
+		title: 'Proyecto grande',
+		description: 'Para desarrollos, hoteles, residenciales o cualquier proyecto que requiera atención especial.',
+		cta: 'Conversemos',
+		accent: 'forest',
+		icon: 'building',
+	},
+];
+---
+
+<div class="quote-gate">
+	<header class="text-center max-w-2xl mx-auto mb-12 space-y-4 section-header" data-reveal="fade">
+		<p class="section-eyebrow">Cotizar</p>
+		<h2 class="text-4xl md:text-5xl font-heading section-title">
+			Elige cómo <em class="text-sage italic">quieres empezar</em>
+		</h2>
+		<p class="text-lg text-text-secondary section-desc">
+			Todas las opciones terminan en una conversación por WhatsApp con nuestro equipo.
+		</p>
+	</header>
+
+	<div class="grid md:grid-cols-3 gap-6 lg:gap-8 quote-options" data-scroll="card">
+		{options.map((opt) => (
+			<a
+				href={opt.href}
+				class={`quote-card group block ${opt.accent === 'sage' ? 'accent-sage' : ''} ${opt.accent === 'terracotta' ? 'accent-terracotta' : ''} ${opt.accent === 'forest' ? 'accent-forest' : ''}`}
+			>
+				<div class="quote-card-inner p-6 lg:p-8 space-y-5">
+					<div class="quote-icon">
+						{opt.icon === 'leaf' && (
+							<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+								<path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+							</svg>
+						)}
+						{opt.icon === 'sparkle' && (
+							<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M12 2l2.4 7.2L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/>
+							</svg>
+						)}
+						{opt.icon === 'building' && (
+							<svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								<rect x="3" y="3" width="18" height="18" rx="1"/>
+								<path d="M8 7h2M8 11h2M8 15h2M14 7h2M14 11h2M14 15h2"/>
+							</svg>
+						)}
+					</div>
+
+					<div>
+						<p class="text-xs uppercase tracking-wider text-sage font-semibold">{opt.eyebrow}</p>
+						<h3 class="text-2xl font-heading mt-2 leading-tight">{opt.title}</h3>
+					</div>
+
+					<p class="text-sm text-text-secondary leading-relaxed">{opt.description}</p>
+
+					<div class="quote-cta">
+						<span>{opt.cta}</span>
+						<svg class="w-4 h-4 arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M5 12h14M13 5l7 7-7 7"/>
+						</svg>
+					</div>
+				</div>
+			</a>
+		))}
+	</div>
+</div>
+
+<style>
+	.quote-card {
+		background: var(--color-surface);
+		border-radius: 1.5rem;
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-soft);
+		transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, border-color 0.4s ease-out;
+		cursor: pointer;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.quote-card:hover {
+		transform: translateY(-6px);
+		box-shadow: var(--shadow-medium);
+		border-color: var(--color-sage);
+	}
+
+	.quote-icon {
+		width: 56px;
+		height: 56px;
+		border-radius: 1rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(140, 154, 132, 0.15);
+		color: var(--color-sage);
+		transition: all 0.3s ease-out;
+	}
+
+	.accent-terracotta .quote-icon {
+		background: rgba(194, 123, 102, 0.15);
+		color: var(--color-terracotta);
+	}
+
+	.accent-forest .quote-icon {
+		background: rgba(45, 58, 49, 0.12);
+		color: var(--color-forest);
+	}
+
+	.quote-card:hover .quote-icon {
+		transform: scale(1.08) rotate(-3deg);
+	}
+
+	.quote-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		color: var(--color-sage);
+		font-size: 0.95rem;
+		padding-top: 0.5rem;
+	}
+
+	.quote-cta .arrow {
+		transition: transform 0.3s ease-out;
+	}
+
+	.quote-card:hover .quote-cta .arrow {
+		transform: translateX(4px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.quote-card,
+		.quote-card .quote-icon,
+		.quote-card .quote-cta .arrow {
+			transition: none !important;
+		}
+	}
+</style>

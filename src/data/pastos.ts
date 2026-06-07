@@ -9,6 +9,8 @@ export type Grass = {
 	image: string;
 	color: string;
 	accent: string;
+	priceSin: number;
+	priceCon: number;
 };
 
 export const grasses: Grass[] = [
@@ -25,6 +27,8 @@ export const grasses: Grass[] = [
 			'https://images.unsplash.com/photo-1683525871483-b4d1fb0ac4e3?auto=format&fit=crop&w=1200&q=80',
 		color: '#e0f2d8',
 		accent: '#3c7a3c',
+		priceSin: 130,
+		priceCon: 240,
 	},
 	{
 		slug: 'pasto-chino',
@@ -39,6 +43,8 @@ export const grasses: Grass[] = [
 			'https://images.unsplash.com/photo-1589496933738-f5c27bc146e3?auto=format&fit=crop&w=1200&q=80',
 		color: '#d6f0e6',
 		accent: '#2f6b57',
+		priceSin: 140,
+		priceCon: 257,
 	},
 	{
 		slug: 'zoysia',
@@ -53,5 +59,7 @@ export const grasses: Grass[] = [
 			'https://images.unsplash.com/photo-1606749482582-8c73563adc2b?auto=format&fit=crop&w=1200&q=80',
 		color: '#e4f7ef',
 		accent: '#1f6c45',
+		priceSin: 180,
+		priceCon: 267,
 	},
 ];

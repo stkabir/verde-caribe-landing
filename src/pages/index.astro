@@ -2,11 +2,42 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import PricingTable from '../components/PricingTable.astro';
+import QuoteGate from '../components/QuoteGate.astro';
+import QuickQuote from '../components/QuickQuote.astro';
+import GardenWizard from '../components/GardenWizard.astro';
+import BigProject from '../components/BigProject.astro';
 import { grasses } from '../data/pastos';
 import type { Grass } from '../data/pastos';
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://verdecaribe.com';
+
+const productSchemas = grasses.map((g) => ({
+	'@context': 'https://schema.org',
+	'@type': 'Product',
+	'@id': `${siteUrl}/#product-${g.slug}`,
+	name: g.name,
+	image: g.image,
+	description: g.longDescription,
+	category: 'Pasto para jardín',
+	brand: {
+		'@type': 'Brand',
+		name: 'Verde Caribe',
+	},
+	offers: {
+		'@type': 'AggregateOffer',
+		priceCurrency: 'MXN',
+		lowPrice: g.priceSin,
+		highPrice: g.priceCon,
+		offerCount: 2,
+		availability: 'https://schema.org/InStock',
+		priceValidUntil: '2026-12-31',
+	},
+	seller: { '@id': `${siteUrl}/#business` },
+}));
 ---
 
-<Layout title="Verde Caribe - Pastos vivos de alta calidad">
+<Layout title="Pastos vivos en Cancún y Riviera Maya | Verde Caribe - Cotiza por WhatsApp">
 	<Navbar />
 	<div class="paper-grain" aria-hidden="true"></div>
 
@@ -29,7 +60,7 @@ import type { Grass } from '../data/pastos';
 					</p>
 					<div class="flex flex-wrap gap-4 hero-buttons">
 						<a href="#pastos" class="btn btn-primary">Conocer variedades</a>
-						<a href="#pedidos" class="btn btn-secondary">Solicitar cotización</a>
+						<a href="#cotizar" class="btn btn-secondary">Cotizar ahora</a>
 					</div>
 				</div>
 				<div class="relative hero-image-container" data-parallax="hero">
@@ -37,7 +68,11 @@ import type { Grass } from '../data/pastos';
 					<div class="relative rounded-[120px] overflow-hidden shadow-large aspect-[4/5] max-h-[550px] hero-image">
 						<img
 							src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
-							alt="Pasto verde exuberante"
+							alt="Jardín con pasto verde exuberante recién instalado por Verde Caribe en Cancún"
+							loading="eager"
+							fetchpriority="high"
+							width="1200"
+							height="1500"
 							class="w-full h-full object-cover"
 						/>
 					</div>
@@ -68,8 +103,10 @@ import type { Grass } from '../data/pastos';
 							<div class="relative overflow-hidden">
 								<img
 									src={grass.image}
-									alt={`Pasto ${grass.name}`}
+									alt={grass.slug === 'san-agustin' ? 'Tapete de pasto San Agustín recién instalado en jardín residencial de Cancún' : grass.slug === 'pasto-chino' ? 'Pasto chino ornamental en camellón decorativo en Playa del Carmen' : 'Césped Zoysia verde esmeralda en jardín expuesto al sol en la Riviera Maya'}
 									loading="lazy"
+									width="1200"
+									height="900"
 									class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
 								/>
 								<div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-foreground/10 to-transparent"></div>
@@ -130,7 +167,10 @@ import type { Grass } from '../data/pastos';
 								<div class="rounded-3xl overflow-hidden shadow-medium aspect-[4/5] gallery-image" data-scroll="image">
 									<img
 										src="https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=600&q=80"
-										alt="Cultivo de pasto"
+										alt="Cultivo de pasto en campos de producción propios de Verde Caribe en Quintana Roo"
+										loading="lazy"
+										width="600"
+										height="750"
 										class="w-full h-full object-cover"
 									/>
 								</div>
@@ -139,7 +179,10 @@ import type { Grass } from '../data/pastos';
 								<div class="rounded-3xl overflow-hidden shadow-medium aspect-[4/5] gallery-image" data-scroll="image">
 									<img
 										src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"
-										alt="Pasto verde exuberante"
+										alt="Pasto verde recién instalado en jardín residencial en Cancún"
+										loading="lazy"
+										width="600"
+										height="750"
 										class="w-full h-full object-cover"
 									/>
 								</div>
@@ -208,111 +251,22 @@ import type { Grass } from '../data/pastos';
 			</div>
 		</section>
 
-		<!-- Quote/CTA Section -->
-		<section id="pedidos" class="py-24 lg:py-32 px-6 lg:px-8">
-			<div class="max-w-7xl mx-auto">
-				<div class="bg-surface rounded-3xl shadow-large p-8 lg:p-16 cta-section" data-reveal="fade">
-					<div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-						<div class="space-y-6">
-							<p class="section-eyebrow">Asesoría especializada</p>
-							<h2 class="text-4xl md:text-5xl font-heading">
-								¿Planeas instalar pasto verde de <em class="text-sage">inmediato</em>?
-							</h2>
-							<p class="text-lg text-text-secondary leading-relaxed">
-								Nuestro equipo técnico evalúa tu terreno, recomienda la variedad adecuada
-								y coordina la entrega puntual. Completa el formulario para recibir una
-								propuesta detallada en menos de 24 horas.
-							</p>
-							<div class="flex items-center gap-4 pt-4">
-								<svg class="w-5 h-5 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-									<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-									<circle cx="12" cy="10" r="3"/>
-								</svg>
-								<span class="text-text-secondary text-sm">Cancún · Playa del Carmen · Puerto Morelos · Tulum</span>
-							</div>
-						</div>
+		<!-- Cotizar Section -->
+		<section id="cotizar" class="py-24 lg:py-32 px-6 lg:px-8">
+			<div class="max-w-7xl mx-auto space-y-20 lg:space-y-24 cta-section" data-reveal="fade">
+				<PricingTable />
 
-						<form class="space-y-6 form-section" id="quote-form">
-							<div class="grid sm:grid-cols-2 gap-4">
-								<label class="space-y-2">
-									<span class="text-sm font-semibold text-foreground">Nombre completo</span>
-									<input
-										type="text"
-										name="name"
-										placeholder="María González"
-										required
-										class="w-full px-4 py-3 rounded-xl border border-border bg-surface-muted text-foreground placeholder:text-text-secondary/50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 form-input"
-									/>
-								</label>
-								<label class="space-y-2">
-									<span class="text-sm font-semibold text-foreground">Correo electrónico</span>
-									<input
-										type="email"
-										name="email"
-										placeholder="hola@ejemplo.com"
-										required
-										class="w-full px-4 py-3 rounded-xl border border-border bg-surface-muted text-foreground placeholder:text-text-secondary/50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 form-input"
-									/>
-								</label>
-							</div>
+				<QuoteGate />
 
-							<div class="grid sm:grid-cols-2 gap-4">
-								<label class="space-y-2">
-									<span class="text-sm font-semibold text-foreground">Teléfono</span>
-									<input
-										type="tel"
-										name="phone"
-										placeholder="55 1234 5678"
-										class="w-full px-4 py-3 rounded-xl border border-border bg-surface-muted text-foreground placeholder:text-text-secondary/50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 form-input"
-									/>
-								</label>
-								<label class="space-y-2">
-									<span class="text-sm font-semibold text-foreground">Variedad de interés</span>
-									<select
-										name="grass"
-										required
-										class="w-full px-4 py-3 rounded-xl border border-border bg-surface-muted text-foreground transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 form-input"
-									>
-										<option value="">Selecciona un pasto</option>
-										{grasses.map((grass: Grass) => (
-											<option value={grass.slug}>{grass.name}</option>
-										))}
-									</select>
-								</label>
-							</div>
-
-							<label class="space-y-2">
-								<span class="text-sm font-semibold text-foreground">Área estimada (m²)</span>
-								<div class="flex flex-wrap gap-4">
-									<label class="flex items-center gap-2 cursor-pointer">
-										<input type="radio" name="area" value="50" class="w-4 h-4 accent-[#8C9A84]" />
-										<span class="text-sm text-text-secondary">Hasta 50 m²</span>
-									</label>
-									<label class="flex items-center gap-2 cursor-pointer">
-										<input type="radio" name="area" value="150" class="w-4 h-4 accent-[#8C9A84]" />
-										<span class="text-sm text-text-secondary">50 - 150 m²</span>
-									</label>
-									<label class="flex items-center gap-2 cursor-pointer">
-										<input type="radio" name="area" value="mas" class="w-4 h-4 accent-[#8C9A84]" />
-										<span class="text-sm text-text-secondary">Más de 150 m²</span>
-									</label>
-								</div>
-							</label>
-
-							<label class="space-y-2">
-								<span class="text-sm font-semibold text-foreground">Cuéntanos tu proyecto</span>
-								<textarea
-									name="message"
-									rows="4"
-									placeholder="Buscamos renovar el jardín frontal y el área de juegos..."
-									class="w-full px-4 py-3 rounded-xl border border-border bg-surface-muted text-foreground placeholder:text-text-secondary/50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 resize-none form-input"
-								></textarea>
-							</label>
-
-							<button type="submit" class="btn btn-primary w-full sm:w-auto">
-								Solicitar cotización
-							</button>
-						</form>
+				<div class="space-y-12 lg:space-y-16">
+					<div id="form-quick" class="scroll-mt-24">
+						<QuickQuote />
+					</div>
+					<div id="form-wizard" class="scroll-mt-24">
+						<GardenWizard />
+					</div>
+					<div id="form-project" class="scroll-mt-24">
+						<BigProject />
 					</div>
 				</div>
 			</div>
@@ -340,8 +294,8 @@ import type { Grass } from '../data/pastos';
 									</svg>
 								</div>
 								<div>
-									<p class="text-sm text-text-secondary">Teléfono</p>
-									<p class="font-semibold">+52 998 123 4567</p>
+									<p class="text-sm text-text-secondary">WhatsApp / Teléfono</p>
+									<p class="font-semibold">+52 998 259 2189</p>
 								</div>
 							</div>
 							<div class="flex items-center gap-4 contact-item cursor-pointer">
@@ -553,6 +507,44 @@ import type { Grass } from '../data/pastos';
 				ease: 'power2.out'
 			});
 
+			gsap.from('.pricing-card', {
+				scrollTrigger: {
+					trigger: '.pricing-grid',
+					start: 'top 80%',
+					once: true
+				},
+				y: 60,
+				opacity: 0,
+				duration: 0.8,
+				stagger: 0.12,
+				ease: 'power3.out'
+			});
+
+			gsap.from('.installation-info', {
+				scrollTrigger: {
+					trigger: '.installation-info',
+					start: 'top 85%',
+					once: true
+				},
+				y: 40,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'power3.out'
+			});
+
+			gsap.from('.quote-card', {
+				scrollTrigger: {
+					trigger: '.quote-options',
+					start: 'top 80%',
+					once: true
+				},
+				y: 60,
+				opacity: 0,
+				duration: 0.8,
+				stagger: 0.15,
+				ease: 'power3.out'
+			});
+
 			gsap.from('.gallery-section', {
 				scrollTrigger: {
 					trigger: '.gallery-section',
@@ -742,4 +734,8 @@ import type { Grass } from '../data/pastos';
 			});
 		}
 	</script>
+
+	{productSchemas.map((schema) => (
+		<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+	))}
 </Layout>
